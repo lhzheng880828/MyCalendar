@@ -1,0 +1,47 @@
+apply plugin: 'com.android.application'
+
+android {
+    compileSdkVersion 27
+    buildToolsVersion "27.0.3"
+
+    defaultConfig {
+        applicationId "com.android.calendar"
+        minSdkVersion 15
+        targetSdkVersion 27
+
+        testApplicationId "com.android.calendar.tests"
+        testInstrumentationRunner "android.test.InstrumentationTestRunner"
+        vectorDrawables.useSupportLibrary = true
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.txt'
+        }
+    }
+    //aaptOptions.cruncherEnabled = false
+    //aaptOptions.useNewCruncher = false
+}
+
+dependencies {
+    implementation 'com.android.support:support-v4:27.0.0'
+    implementation project(':calendarCommon')
+    implementation project(':colorpicker')
+    implementation project(':datetimepicker')
+    implementation project(':timezonepicker')
+    implementation project(':chips')
+    implementation project(':common')
+}
+
+configurations.all {
+    resolutionStrategy.eachDependency { details ->
+        def requested = details.requested
+        if (requested.group == 'com.android.support') {
+            if (!requested.name.startsWith("multidex")) {
+                //这里写你想统一的版本是多少，前提是你sdk里有
+                details.useVersion '27.0.0'
+            }
+        }
+    }
+}
