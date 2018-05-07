@@ -1,0 +1,35 @@
+import org.gradle.api.artifacts.Dependency;
+apply plugin: 'com.android.library'
+android {
+
+    compileSdkVersion 27
+    buildToolsVersion "27.0.3"
+
+    sourceSets.main {
+        manifest.srcFile 'AndroidManifest.xml'
+        java.srcDirs = ['src']
+        res.srcDirs = ['res']
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.txt'
+        }
+    }
+}
+/*dependencies {
+    compile findDependency(':support-v4', 'com.android.support:support-v4:27.0.0')
+}*/
+/*Dependency findDependency(String projectName, String moduleName) {
+    if (findProject(projectName) != null) {
+        return dependencies.project(path: projectName)
+    }
+
+    return dependencies.create(moduleName)
+}*/
+
+dependencies {
+    implementation 'com.android.support:support-annotations:27.0.0'
+    implementation 'com.android.support:support-v4:27.0.0'
+}
